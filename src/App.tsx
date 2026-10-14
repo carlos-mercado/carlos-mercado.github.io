@@ -10,12 +10,13 @@ import FileExplorer from "./FileExplorer.tsx"
 
 //images
 import info from './assets/info.png'
-import resume from './assets/resume12.jpg'
+import resume from './assets/resume14.png'
 import folder from './assets/folder.png'
 import weather from './assets/weather.png'
 import web from './assets/web.png'
 import paint from './assets/paint.png'
 import github from './assets/github.gif'
+import contact from './assets/envelope.png'
 
 function App() {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
@@ -23,6 +24,7 @@ function App() {
   const [weatherOn, setWeatherOn] = useState(false);
   const [donutOn, setDonutOn] = useState(false);
   const [folderOn, setFolderOn] = useState(false);
+  const [contactOn, setContactOn] = useState(false);
 
   const [zIndex, set_zIndex] = useState(1);
 
@@ -49,6 +51,8 @@ function App() {
         setDonutOn(true);
       else if(returnedInfo[0] == "Projects")
         setFolderOn(true);
+      else if(returnedInfo[0] == "Contact")
+        setContactOn(true);
       else
         handleCardDoubleClick(returnedInfo[0]);
     }
@@ -78,6 +82,12 @@ function App() {
           cardID="Info" 
           onIconClick={handleCardClick} 
           isSelected={selectedCard === "Info"}
+        />
+        <Card
+          icon={contact}
+          cardID="Contact"
+          onIconClick={handleCardClick}
+          isSelected={selectedCard === "Contact"}
         />
         <Card 
           icon={folder} 
@@ -165,6 +175,37 @@ function App() {
         {folderOn == true && (
             <FileExplorer closeFunc={() => setFolderOn(false)}>
             </FileExplorer>
+        )}
+
+        {contactOn && (
+          <Window
+            windowName="Contact"
+            contentHeight="200px"
+            contentWidth="min(420px, 90vw)"
+            content={
+              <dl className="m-4 mt-6 space-y-4 border-2 border-t-[#808080] border-l-[#808080] border-b-white border-r-white bg-white p-4 text-[10px] text-black">
+                <div>
+                  <dt className="mb-2">Email</dt>
+                  <dd>
+                    <a className="break-all text-[#000080] underline focus-visible:outline-2 focus-visible:outline-dotted" href="mailto:carlosmercadomail@gmail.com">
+                      carlosmercadomail@gmail.com
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="mb-2">GitHub</dt>
+                  <dd>
+                    <a className="break-all text-[#000080] underline focus-visible:outline-2 focus-visible:outline-dotted" href="https://github.com/carlos-mercado" target="_blank" rel="noopener noreferrer">
+                      github.com/carlos-mercado
+                    </a>
+                  </dd>
+                </div>
+              </dl>
+            }
+            contentZ={101}
+            onClose={() => setContactOn(false)}
+            className="contact-window"
+          />
         )}
       </div>
   );
